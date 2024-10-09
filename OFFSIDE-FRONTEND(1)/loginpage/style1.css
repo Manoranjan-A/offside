@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000; /* Black background */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+}
+
+.login-page {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    height: 80%;
+    background-color: #1a1a1a; /* Dark background for form container */
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.login-image {
+    width: 50%;
+    height: 100%;
+}
+
+.login-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.login-container {
+    width: 50%;
+    padding: 40px;
+    background-color: #000; /* Black background for sign-up form */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    color: #fff; /* White text for contrast */
+}
+
+.title {
+    font-size: 48px;
+    font-family: 'Oswald', sans-serif;
+    color: #A3C030; /* Green title */
+    margin-bottom: 40px;
+}
+
+form {
+    width: 100%;
+}
+
+label {
+    font-size: 16px;
+    color: #ccc; /* Light gray for labels */
+    margin-bottom: 5px;
+    display: block;
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #555; /* Lighter border for better contrast */
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #333; /* Darker background for input fields */
+    color: #fff; /* White text inside inputs */
+}
+
+.password-container {
+    position: relative;
+}
+
+.show-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888; /* Light gray for the eye icon */
+}
+
+.btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sign-in-btn {
+    background-color: #A3C030; /* Green sign-up button */
+    color: white;
+    border: none;
+}
+
+.google-btn {
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.google-icon {
+    margin-right: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.or-signin {
+    text-align: center;
+    margin: 20px 0;
+    color: #ccc; /* Light gray for "Or sign up with" text */
+}
+
+.signup-prompt {
+    font-size: 14px;
+    color: #ccc; /* Light gray for the sign-up prompt */
+    text-align: center;
+    width: 100%;
+}
+
+.signup-prompt a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.signup-prompt a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        #bookingForm {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #bookingForm input {
+            padding: 12px;
+            font-size: 18px;
+            border: 1px solid #28a745;
+            border-radius: 5px;
+            margin-right: 10px;
+            background-color: #222;
+            color: #fff;
+            outline: none;
+        }
+
+        #bookingForm input::placeholder {
+            color: #bbb;
+        }
+
+        #getBookingDetails {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        #getBookingDetails:hover {
+            background-color: #218838;
+        }
+
+        #bookingDetails {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+        #details-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        #details-content div {
+            margin-right: 20px;
+        }
+
+        #bookingDetails p {
+            font-size: 1.1em;
+            margin: 10px 0;
+            color: #bbb;
+        }
+
+        #bookingDetails p strong {
+            color: #28a745;
+        }
+
+        #qrcode {
+            margin-left: 20px;
+            width: 128px;
+            height: 128px;
+        }
+
+        #okButton {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 40px;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        #okButton:hover {
+            background-color: #218838;
+        }
+
+        #downloadPDF {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        #downloadPDF:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            #details-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            #qrcode {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+
+            #okButton, #downloadPDF {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Enter Booking ID</h1>
+
+    <!-- Booking ID Input Form -->
+    <div id="bookingForm">
+        <input type="text" id="bookingIdInput" placeholder="Enter booking ID">
+        <button id="getBookingDetails">Get Booking Details</button>
+    </div>
+
+    <!-- Booking Details Section -->
+    <div id="bookingDetails">
+        <div id="details-content">
+            <!-- The booking text details on the left -->
+            <div>
+                <p><strong>First Name:</strong> <span id="firstName"></span></p>
+                <p><strong>Last Name:</strong> <span id="lastName"></span></p>
+                <p><strong>Email:</strong> <span id="email"></span></p>
+                <p><strong>Phone:</strong> <span id="phone"></span></p>
+                <p><strong>Date:</strong> <span id="date"></span></p>
+                <p><strong>Start Time:</strong> <span id="startTime"></span></p>
+                <p><strong>End Time:</strong> <span id="endTime"></span></p>
+            </div>
+    
+            <!-- The QR code on the right -->
+            <div id="qrcode"></div>
+        </div>
+    
+        <!-- Buttons: download on the left, OK on the right -->
+        <div style="display: flex; justify-content: space-between; width: 100%;">
+            <button id="downloadPDF">Download as PDF</button>
+            <a id="okButton" href="index2.html">OK</a>
+        </div>
+    </div>
+
+    <!-- Include jsPDF and QRCode.js Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        document.getElementById('getBookingDetails').addEventListener('click', function() {
+            const bookingId = document.getElementById('bookingIdInput').value.trim();
+
+            if (bookingId) {
+                fetch(`http://localhost:3000/booking/${bookingId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Booking not found');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        document.getElementById("firstName").textContent = data.firstName;
+                        document.getElementById("lastName").textContent = data.lastName;
+                        document.getElementById("email").textContent = data.email;
+                        document.getElementById("phone").textContent = data.phone;
+                        document.getElementById("date").textContent = data.date;
+                        document.getElementById("startTime").textContent = data.startTime;
+                        document.getElementById("endTime").textContent = data.endTime;
+
+                        // Generate QR code
+                        const qrCode = new QRCode(document.getElementById("qrcode"), {
+                            text: bookingId,
+                            width: 128,
+                            height: 128
+                        });
+
+                        document.getElementById("bookingDetails").style.display = "flex";
+                    })
+                    .catch(error => {
+                        console.error('Error fetching booking details:', error);
+                        alert('Booking not found or failed to fetch booking details.');
+                    });
+            } else {
+                alert('Please enter a booking ID.');
+            }
+        });
+
+        document.getElementById('downloadPDF').addEventListener('click', function() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Fetch details from the page
+            const firstName = document.getElementById("firstName").textContent;
+            const lastName = document.getElementById("lastName").textContent;
+            const email = document.getElementById("email").textContent;
+            const phone = document.getElementById("phone").textContent;
+            const date = document.getElementById("date").textContent;
+            const startTime = document.getElementById("startTime").textContent;
+            const endTime = document.getElementById("endTime").textContent;
+
+            // Add booking details to the PDF
+            doc.text(`Booking Details:`, 10, 10);
+            doc.text(`First Name: ${firstName}`, 10, 20);
+            doc.text(`Last Name: ${lastName}`, 10, 30);
+            doc.text(`Email: ${email}`, 10, 40);
+            doc.text(`Phone: ${phone}`, 10, 50);
+            doc.text(`Date: ${date}`, 10, 60);
+            doc.text(`Start Time: ${startTime}`, 10, 70);
+            doc.text(`End Time: ${endTime}`, 10, 80);
+
+            // Add QR code to the PDF
+            const qrCanvas = document.querySelector('#qrcode canvas');
+            const qrDataURL = qrCanvas.toDataURL('image/png');
+            doc.addImage(qrDataURL, 'PNG', 10, 90, 50, 50);
+
+            // Save the PDF
+            doc.save(`booking_${firstName}_${lastName}.pdf`);
+        });
+    </script>
+</body>
+</html>

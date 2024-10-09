@@ -1,0 +1,32 @@
+[
+  {
+    "username": "Sandy",
+    "email": "sandhiyarajamanickam@gmail.com",
+    "password": "$2b$10$mAFfvvk/vF0uNozUhDPnIedq.iq5WG1ueQ.Lrp5Hs3lU2Vxkr5DyO"
+  },
+  {
+    "username": "Vijey",
+    "email": "vijeyasrithinesh1d@gmail.com",
+    "password": "$2b$10$nUUczlSVkcAHfZlHs4FsGucHZXjvq7ObUyg39f1XSDscQZGpR9kG."
+  },
+  {
+    "username": "Manoranjan",
+    "email": "uflspartan@gmail.com",
+    "password": "$2b$10$OtBswtyGDlG6H1AlmgUeQehDcbuay5T3fCdmXAWDjB7TQUMaRM8Pu"
+  },
+  {
+    "username": "Harsha",
+    "email": "harsha@gmail.com",
+    "password": "$2b$10$.vv25oxltspPxUGF8Yk2Puh3QXHkyWfKwWP6sVLbS4rGYaNWEedje"
+  },
+  {
+    "username": "hiphop",
+    "email": "hiphop@gmail.com",
+    "password": "$2b$10$u1ylpYRPLbPqFirSt/jrruWlGQE.lJgIpaLA6Wkr.DKmymYbGRucO"
+  },
+  {
+    "username": "man",
+    "email": "man@gmail.com",
+    "password": "$2b$10$DRKv4sOkNu7dGYBdZfjSleKJcIJpMEhKiH6jIVHX23HxLqCs/3gg2"
+  }
+]

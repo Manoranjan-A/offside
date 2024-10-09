@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offside - Main Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Basic styles */
+        body {
+            font-family: 'Oswald', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #fff;
+        }
+
+        header {
+            background-color: #7BA33D;
+            padding: 15px;
+            text-align: left;
+        }
+
+        header h1 {
+            margin: 0;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        /* Background Image */
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: url('turf.jpg') center/cover no-repeat;
+        }
+        
+        /* Turf category section */
+        .turf-category {
+            padding: 60px 30px;
+            text-align: center;
+            background: url('turf1.jpg') center/cover no-repeat;
+            position: relative;
+            color: #fff;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .turf-category h2 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+        }
+
+        .turf-cards {
+            display: flex;
+            justify-content: space-around;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .turf-card {
+            background-color: rgba(45, 45, 45, 0.9);
+            border-radius: 15px;
+            width: 160px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .turf-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        .turf-card img {
+            width: 70px;
+            margin-bottom: 15px;
+        }
+
+        .turf-card h3 {
+            font-size: 20px;
+            margin-top: 15px;
+            font-weight: 600;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Link styling for the Badminton card */
+        .badminton-card a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .turf-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .turf-card {
+                width: 80%;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* What people love about us section */
+        .feedback-section {
+            background-color: #121212;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .feedback-section h2 {
+            font-size: 26px;
+            font-weight: 500;
+            margin-bottom: 40px;
+        }
+
+        .feedback-cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .feedback-card {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .feedback-card img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .feedback-card h3 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .feedback-card p {
+            font-size: 14px;
+        }
+
+        /* Feedback input */
+        .feedback-input {
+            margin-top: 40px;
+            padding: 10px;
+            width: 50%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .submit-feedback {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #7BA33D;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Contact Info */
+        .footer {
+            background-color: #1e1e1e;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer h3 {
+            margin-bottom: 10px;
+        }
+
+        .footer p, .footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer-icons {
+            margin-top: 10px;
+        }
+
+        .footer-icons img {
+            width: 30px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        /* Button for Scan QR */
+        .scan-btn {
+            margin-top: 40px;
+            padding: 12px 20px;
+            background-color: #ff7f50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .scan-btn:hover {
+            background-color: #ff6347;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>OFFSIDE</h1>
+    </header>
+
+    <!-- Image Carousel Section -->
+    <div class="carousel"></div>
+
+    <!-- Turf Category Section -->
+    <main>
+        <section class="turf-category">
+            <h2>Turf Category</h2>
+            <div class="turf-cards">
+                
+                <!-- Football -->
+                <div class="turf-card">
+                    <img src="football-icon.png" alt="Football Icon">
+                    <h3>Football</h3>
+                </div>
+
+                <!-- Basketball -->
+                <div class="turf-card">
+                    <img src="basketball-icon.jpg" alt="Basketball Icon">
+                    <h3>Basketball</h3>
+                </div>
+
+                <!-- Cricket -->
+                <div class="turf-card">
+                    <img src="cricket-icon.jpg" alt="Cricket Icon">
+                    <h3>Cricket</h3>
+                </div>
+
+                <!-- Badminton with Link to booking.html -->
+                <div class="turf-card badminton-card">
+                    <a href="./booking.html">
+                        <img src="badminton-icon.jpg" alt="Badminton Icon">
+                        <h3>Badminton</h3>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Feedback Section -->
+        <section class="feedback-section">
+            <h2>What people love about us!</h2>
+            <div class="feedback-cards" id="feedbackCards"></div>
+
+            <!-- Feedback Input Box -->
+            <div>
+                <input type="text" class="feedback-input" id="feedbackInput" placeholder="Drop your feedback here ✎">
+                <button class="submit-feedback" id="submitFeedback">Submit Feedback</button>
+            </div>
+
+            <!-- Button to Scan QR Code -->
+            <button class="scan-btn" onclick="window.location.href='./scan.html'">Check Booking Details</button>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <h3>Contact Us</h3>
+        <p>Peelamedu, Coimbatore - 641004</p>
+        <p>Phone: +91 9940xxxxx</p>
+
+        <div class="footer-icons">
+            <img src="facebook-icon.png" alt="Facebook Icon">
+            <img src="instagram-icon.png" alt="Instagram Icon">
+            <img src="youtube-icon.png" alt="YouTube Icon">
+        </div>
+    </footer>
+
+    <!-- JavaScript to handle feedback and turf categories -->
+    <script>
+        // Fetch and display feedbacks
+        window.onload = function() {
+            fetch('http://localhost:3000/feedbacks')
+            .then(response => response.json())
+            .then(data => {
+                const feedbackCardsContainer = document.getElementById('feedbackCards');
+                feedbackCardsContainer.innerHTML = ''; // Clear existing content
+
+                data.forEach(feedback => {
+                    const feedbackCard = `
+                        <div class="feedback-card">
+                            <img src="default-user.jpg" alt="User">
+                            <h3>${feedback.username}</h3>
+                            <p>"${feedback.feedback}"</p>
+                        </div>
+                    `;
+                    feedbackCardsContainer.innerHTML += feedbackCard;
+                });
+            });
+        };
+
+        // Handle feedback submission
+        document.getElementById('submitFeedback').addEventListener('click', function() {
+            var feedbackInput = document.getElementById('feedbackInput').value;
+            var userName = localStorage.getItem('username');
+            
+            if (feedbackInput.trim() !== "" && userName) {
+                fetch('http://localhost:3000/feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: userName, feedback: feedbackInput })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Feedback submitted successfully!');
+                        // Clear input and update UI accordingly
+                        document.getElementById('feedbackInput').value = '';
+                    } else {
+                        alert('Failed to submit feedback.');
+                    }
+                });
+            } else {
+                alert("Please enter your feedback and ensure you are logged in.");
+            }
+        });
+    </script>
+</body>
+</html>

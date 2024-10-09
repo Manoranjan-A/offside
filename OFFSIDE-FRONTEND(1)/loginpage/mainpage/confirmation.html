@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            margin: 0;
+        }
+        .confirmation-message {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            color: green;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            color: #555;
+        }
+        #qrcode {
+            margin: 20px auto;
+            display: block;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="confirmation-message">
+        <h2>Booking Confirmed!</h2>
+        <p>Your Booking ID is: <span id="bookingId"></span></p>
+        <p><strong>First Name:</strong> <span id="firstName"></span></p>
+        <p><strong>Last Name:</strong> <span id="lastName"></span></p>
+        <p><strong>Email:</strong> <span id="email"></span></p>
+        <p><strong>Date:</strong> <span id="date"></span></p>
+        <p><strong>Start Time:</strong> <span id="startTime"></span></p>
+        <p><strong>End Time:</strong> <span id="endTime"></span></p>
+
+        <!-- QR Code display -->
+        <div id="qrcode"></div>
+
+        <!-- Buttons to download PDF and go back to the main page -->
+        <div class="buttons">
+            <button id="downloadPDF">Download Booking as PDF</button>
+            <button><a href="index2.html">Go Back to Main Page</a></button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        // Function to load booking details from booking.json
+        function loadBookingDetails() {
+            fetch('booking.json')
+                .then(response => response.json())
+                .then(data => {
+                    const booking = data.booking; // Assuming the booking details are stored under a 'booking' object
+
+                    // Display the booking details
+                    document.getElementById('bookingId').textContent = booking.id;
+                    document.getElementById('firstName').textContent = booking.firstName;
+                    document.getElementById('lastName').textContent = booking.lastName;
+                    document.getElementById('email').textContent = booking.email;
+                    document.getElementById('date').textContent = booking.date;
+                    document.getElementById('startTime').textContent = booking.startTime;
+                    document.getElementById('endTime').textContent = booking.endTime;
+
+                    // Generate QR code with the booking ID
+                    new QRCode(document.getElementById("qrcode"), {
+                        text: booking.id,
+                        width: 128,
+                        height: 128
+                    });
+                })
+                .catch(error => {
+                    console.error("Error loading booking details:", error);
+                    alert("Failed to load booking details.");
+                });
+        }
+
+        // Function to download the booking details as a PDF
+// Function to download the booking details as a PDF
+// Function to download the booking details as a PDF
+document.getElementById('downloadPDF').addEventListener('click', function() {
+    fetch('booking.json')
+        .then(response => response.json())
+        .then(data => {
+            const booking = data.booking;
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Set general styling
+            doc.setFontSize(18);
+            doc.setFont("helvetica", "bold");
+            doc.setTextColor(40, 44, 52); // Dark color for titles
+
+            // Add title with better styling
+            doc.text('Booking Confirmation', 105, 20, { align: 'center' });
+
+            // Add horizontal line for better separation
+            doc.setDrawColor(0, 0, 0);
+            doc.line(10, 25, 200, 25); // x1, y1, x2, y2
+
+            doc.setFontSize(14);
+            doc.setFont("helvetica", "bold");
+            doc.setTextColor(60, 60, 60);
+            doc.text('Booking Details', 20, 40);
+
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(0, 0, 0);
+
+            // Define table structure for consistent alignment
+            const detailsTable = [
+                ['First Name:', booking.firstName],
+                ['Last Name:', booking.lastName],
+                ['Email:', booking.email],
+                ['Phone:', booking.phone],
+                ['Date:', booking.date],
+                ['Start Time:', booking.startTime],
+                ['End Time:', booking.endTime],
+            ];
+
+            let rowY = 50;
+            detailsTable.forEach(([label, value]) => {
+                doc.setFont("helvetica", "bold");
+                doc.text(label, 20, rowY);
+                doc.setFont("helvetica", "normal");
+                doc.text(value, 70, rowY);
+                rowY += 10; // Move to the next line
+            });
+
+            // Add some spacing before the QR code
+            doc.setFont("helvetica", "bold");
+            doc.text('QR Code for Booking ID:', 20, rowY + 10);
+
+            // Insert the QR code
+            const qrCanvas = document.querySelector('#qrcode canvas');
+            const qrDataURL = qrCanvas.toDataURL('image/png');
+            doc.addImage(qrDataURL, 'PNG', 80, rowY + 20, 50, 50);
+
+            // Add footer
+            doc.setFont("helvetica", "italic");
+            doc.setFontSize(10);
+            doc.text('Thank you for your booking!', 105, rowY + 80, { align: 'center' });
+
+            // Save the final PDF
+            doc.save(`booking_${booking.firstName}_${booking.lastName}.pdf`);
+        })
+        .catch(error => {
+            console.error("Error generating PDF:", error);
+            alert("Failed to generate PDF.");
+        });
+});
+
+        // Load booking details when the page loads
+        window.onload = loadBookingDetails;
+    </script>
+</body>
+</html>

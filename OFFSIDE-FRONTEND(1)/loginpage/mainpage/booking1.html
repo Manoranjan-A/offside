@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>basketball Court Booking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('your-basketball-image.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .header-section {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .title {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .content-section {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .left-section, .right-section {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            flex: 1;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input, select {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #444;
+            color: white;
+        }
+
+        label {
+            margin-bottom: 5px;
+            color: #ddd;
+        }
+
+        h2 {
+            color: #ddd;
+        }
+
+        .button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 20px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #218838;
+        }
+
+        .date-container {
+            background-color: #222;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        #datePicker {
+            width: 100%;
+        }
+
+        .slot {
+            margin: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 150px;
+            height: 70px;
+            text-align: center;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slot.available {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .slot.booked {
+            background-color: #dc3545;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .slot.selected {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .timeSlotsContainer {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            justify-items: center;
+            margin-top: 10px;
+        }
+
+        #totalAmount {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="mainContent">
+        <div class="header-section">
+            <h1 class="title">basketball Court Booking</h1>
+        </div>
+
+        <div class="content-section">
+            <div class="left-section">
+                <div class="date-container">
+                    <h2 id="selectedDate" style="color: #ddd;"></h2>
+
+                    <label for="datePicker">Choose Date:</label>
+                    <input type="text" id="datePicker" placeholder="Select date">
+
+                    <label for="courtSelect">Select Court:</label>
+                    <select id="courtSelect">
+                        <option value="Court 1">Court 1</option>
+                        <option value="Court 2">Court 2</option>
+                        <option value="Court 3">Court 3</option>
+                        <option value="Court 4">Court 4</option>
+                    </select>
+
+                    <label for="hoursSelect">Select Number of Hours:</label>
+                    <select id="hoursSelect">
+                        <option value="1">1 hour</option>
+                        <option value="2">2 hours</option>
+                        <option value="3">3 hours</option>
+                        <option value="4">4 hours</option>
+                    </select>
+
+                    <p id="selectedHours" style="color: #ddd;"></p>
+
+                    <div class="timeSlotsContainer" id="timeSlotsContainer"></div>
+                    <p id="totalAmount">Total Amount: Rs 0</p>
+                    <a href="#" class="button" id="proceedToPayment">Confirm Booking</a>
+                </div>
+            </div>
+
+            <div class="right-section">
+                <form id="bookingForm">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+                    <label for="phone">Phone</label>
+                    <div style="display: flex; align-items: center;">
+                        <select id="countryCode" style="margin-right: 10px;">
+                            <option value="+91">+91 (India)</option>
+                            <option value="+1">+1 (USA)</option>
+                            <option value="+44">+44 (UK)</option>
+                        </select>
+                        <input id="phone" type="tel" required placeholder="Enter your phone number">
+                    </div>
+
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" placeholder="Enter your address" required>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        $(function() {
+            $("#datePicker").datepicker({
+                dateFormat: "DD, MM dd, yy",
+                minDate: new Date(),
+                onSelect: function(dateText, inst) {
+                    $('#selectedDate').text(dateText);
+                    updateAvailableSlots();
+                }
+            });
+
+            $("#courtSelect, #hoursSelect").change(updateAvailableSlots);
+        });
+
+        function updateAvailableSlots() {
+            const selectedDate = $('#datePicker').val();
+            const court = $('#courtSelect').val();
+            const hours = parseInt($('#hoursSelect').val());
+            $('#selectedHours').text(`Selected Hours: ${hours}`);
+
+            const timeSlotsContainer = $('#timeSlotsContainer');
+            timeSlotsContainer.empty();
+
+            const bookedSlots = {
+                "Court 1": ['7:00 AM - 8:00 AM', '9:00 AM - 10:00 AM'],
+                "Court 2": ['6:00 AM - 7:00 AM', '8:00 AM - 9:00 AM'],
+                "Court 3": ['8:00 AM - 9:00 AM', '10:00 AM - 11:00 AM'],
+                "Court 4": ['11:00 AM - 12:00 PM', '12:00 PM - 1:00 PM']
+            };
+
+            const startHour = 5; // Start at 5 AM
+            const endHour = 22;  // End at 10 PM
+
+            const availableSlots = [];
+
+            // Loop to create all possible time slots
+            for (let i = startHour; i + hours <= endHour; i++) {
+                const startTime = formatTime(i);
+                const endTime = formatTime(i + hours);
+
+                // Check if the consecutive time slots are available
+                let allHoursAvailable = true;
+                for (let j = 0; j < hours; j++) {
+                    const currentSlot = `${formatTime(i + j)} - ${formatTime(i + j + 1)}`;
+                    if (bookedSlots[court].includes(currentSlot)) {
+                        allHoursAvailable = false;
+                        break;
+                    }
+                }
+
+                // Add the slot to the list with the correct status
+                availableSlots.push({
+                    timeRange: `${startTime} - ${endTime}`,
+                    available: allHoursAvailable
+                });
+            }
+
+            // Display the available and booked slots
+            availableSlots.forEach(slot => {
+                const slotDiv = $('<div class="slot"></div>').text(slot.timeRange);
+
+                if (slot.available) {
+                    slotDiv.addClass('available').click(function() {
+                        $('.slot').removeClass('selected');
+                        slotDiv.addClass('selected');
+                        updateTotalAmount(hours);
+                    });
+                } else {
+                    slotDiv.addClass('booked');
+                }
+
+                timeSlotsContainer.append(slotDiv);
+            });
+        }
+
+        function formatTime(hour) {
+            if (hour === 12) return '12:00 PM';
+            if (hour === 0) return '12:00 AM';
+            if (hour > 12) return `${hour - 12}:00 PM`;
+            return `${hour}:00 AM`;
+        }
+
+        function updateTotalAmount(hours) {
+            const totalAmount = 100 * hours; // Example: Rs 100 per hour
+            $('#totalAmount').text(`Total Amount: Rs ${totalAmount}`);
+        }
+    </script>
+</body>
+</html>
